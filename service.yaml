@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # We'll be able to address the Service as this name through kubectl.
+  name: hello-world
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    # name of the port on the Pod that we'll be targeting.
+    targetPort: http
+  # Pods that match this label selector query will receive this Service's traffic.
+  # Notice that we're not included the 'release' label, so all releases would
+  # receive this Service's traffic.
+  selector:
+    app: hello-world

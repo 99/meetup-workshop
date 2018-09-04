@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  # We'll be able to address the Deployment as this name through kubectl.
+  name: hello-world
+spec:
+  selector:
+    # Pods that match these labels will be considered under this
+    # Deployment's management.
+    matchLabels:
+      app: hello-world
+      release: primary
+  # How many Pods this Deployment should stamp out.
+  replicas: 1
+  # This is the template we'll use for the Pods to be created.
+  template:
+    metadata:
+      # unlike pod.yaml, the name is not included in the meta data as a unique
+      # name is generated from the deployment name
+      # These labels are used to associate with the Deployment, and can also
+      # be used by Services to route traffic.
+      labels:
+        app: hello-world
+        release: primary
+    spec:
+      containers:
+        # While you can run multiple containers in a Pod, this example has
+        # a single container with our web app named 'hello-world'.
+        - name: hello-world
+          image: testaly/kube-hello-world:1.0
+          # These are the ports we'll make available to Services.
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 5000

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  # We'll be able to address the Pod as this name through kubectl.
+  name: hello-world
+  labels:
+    # Our Service will be able to route traffic by querying Pod labels.
+    app: hello-world
+    release: primary
+spec:
+  containers:
+    # While you can run multiple containers in a Pod, this example has
+    # a single container with our web app named 'hello-world'.
+    - name: hello-world
+      image: testaly/kube-hello-world:1.0
+      # These are the ports we'll make available to Services.
+      ports:
+        - name: http
+          protocol: TCP
+          containerPort: 5000
